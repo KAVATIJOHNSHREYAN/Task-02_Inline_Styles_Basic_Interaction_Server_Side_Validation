@@ -81,6 +81,10 @@ python app.py
 Access the application in your browser at:
 👉 **[http://127.0.0.1:5000](http://127.0.0.1:5000)**
 
+### 🌐 Live Production Deployment
+👉 **[https://task-02-inline-styles-validation.vercel.app](https://task-02-inline-styles-validation.vercel.app)**
+
+
 ---
 
 ## 📄 License
