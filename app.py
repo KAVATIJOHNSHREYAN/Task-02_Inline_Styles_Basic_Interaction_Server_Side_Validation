@@ -208,7 +208,7 @@ def contact():
     session['latest_submission'] = submission_entry
     flash('Your inquiry has been submitted and validated successfully!', 'success')
 
-    # Query param fallback for serverless deployments
+    # Query param fallback for serverless deployments (excluding large avatar data string to prevent HTTP header overflow)
     return redirect(url_for('success', 
                             sub_id=sub_id, 
                             name=form_data['name'], 
@@ -219,7 +219,6 @@ def contact():
                             gender=form_data['gender'], 
                             subject=form_data['subject'], 
                             message=form_data['message'], 
-                            avatar_path=avatar_rel_path,
                             timestamp=timestamp))
 
 
