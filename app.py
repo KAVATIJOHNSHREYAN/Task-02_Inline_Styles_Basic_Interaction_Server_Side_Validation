@@ -165,14 +165,23 @@ def contact():
     # Handle Profile Avatar Upload
     avatar_rel_path = ''
     if file and file.filename != '' and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4().hex[:6]}_{filename}"
-        save_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
         try:
-            file.save(save_path)
-            avatar_rel_path = f"/static/uploads/{unique_filename}"
+            # Convert uploaded image to Base64 Data URI (serverless-friendly, persistent across redirects)
+            import base64
+            file_bytes = file.read()
+            ext = file.filename.rsplit('.', 1)[1].lower()
+            mime_type = f"image/{ext if ext != 'jpg' else 'jpeg'}"
+            b64_encoded = base64.b64encode(file_bytes).decode('utf-8')
+            avatar_rel_path = f"data:{mime_type};base64,{b64_encoded}"
+
+            # Also save file locally for persistent storage
+            filename = secure_filename(file.filename)
+            unique_filename = f"{uuid.uuid4().hex[:6]}_{filename}"
+            save_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+            with open(save_path, 'wb') as f:
+                f.write(file_bytes)
         except Exception as e:
-            print(f"File save error: {e}")
+            print(f"Avatar processing notice: {e}")
 
     # Build Submission Payload
     sub_id = f"SUB2-{uuid.uuid4().hex[:8].upper()}"
