@@ -14,7 +14,7 @@
     <!-- Lucide Vector Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Embedded VisionOS Dark Glassmorphism CSS System for Guaranteed Deployment Rendering -->
+    <!-- Embedded VisionOS Dark Glassmorphism CSS System -->
     <style>
 /* ==========================================================================
    SMART CONTACT PORTAL V2 - VISIONOS & RAYCAST 2026 DESIGN SYSTEM
@@ -81,7 +81,6 @@ body {
   color: #F8FAFC;
 }
 
-/* Pure CSS Abstract Curved Light Ribbons & Mesh Gradient Canvas */
 .space-canvas {
   position: fixed;
   top: 0;
@@ -97,7 +96,6 @@ body {
   pointer-events: none;
 }
 
-/* Geometric Light Lines & Raycast Blueprint Grid Overlay */
 .space-canvas::before {
   content: '';
   position: absolute;
@@ -112,7 +110,6 @@ body {
   opacity: 0.8;
 }
 
-/* Abstract Floating Glowing Orbs */
 .orb {
   position: fixed;
   border-radius: 50%;
@@ -152,7 +149,6 @@ body {
   padding: 0 1.5rem;
 }
 
-/* REDESIGNED VISIONOS FLOATING NAVBAR */
 .navbar-floating {
   position: sticky;
   top: 1.25rem;
@@ -240,7 +236,6 @@ body {
   box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5), var(--glow-cyan);
 }
 
-/* HERO SECTION */
 .hero-v2 {
   padding: 4.5rem 0 3rem 0;
   text-align: center;
@@ -299,7 +294,6 @@ body {
   margin: 0 auto 2.5rem auto;
 }
 
-/* EXTENDED FORM & VISIONOS GLASS CONTAINER */
 .glass-form-card-v2 {
   max-width: 840px;
   margin: 0 auto 6rem auto;
@@ -446,7 +440,6 @@ textarea.form-input {
   color: var(--color-cyan);
 }
 
-/* Dynamic Field Feedback Styles */
 .field-feedback {
   font-size: 0.8rem;
   font-weight: 500;
@@ -463,7 +456,6 @@ textarea.form-input {
   color: var(--color-rose);
 }
 
-/* Password Strength Bar */
 .password-meter {
   height: 4px;
   width: 100%;
@@ -479,7 +471,6 @@ textarea.form-input {
   transition: width 0.3s ease, background-color 0.3s ease;
 }
 
-/* Gender Radio Cards */
 .radio-group {
   display: flex;
   gap: 1rem;
@@ -517,7 +508,6 @@ textarea.form-input {
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
-/* Profile Image File Upload Card */
 .file-upload-card {
   background: rgba(8, 17, 31, 0.55);
   border: 2px dashed var(--glass-border);
@@ -544,7 +534,6 @@ textarea.form-input {
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
 }
 
-/* Terms Checkbox */
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -561,7 +550,6 @@ textarea.form-input {
   cursor: pointer;
 }
 
-/* Pill Submit Button */
 .btn-submit-v2 {
   width: 100%;
   background: linear-gradient(135deg, var(--color-royal-blue), var(--color-cyan), var(--color-purple));
@@ -593,7 +581,28 @@ textarea.form-input {
   box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4), var(--glow-cyan);
 }
 
-/* SUCCESS CONFIRMATION & FOOTER */
+/* Alert Notification Banners */
+.alert {
+  padding: 1rem 1.4rem;
+  border-radius: 14px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(8, 17, 31, 0.75);
+  backdrop-filter: blur(16px);
+}
+
+.alert-danger {
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  color: #FDA4AF;
+}
+
+.alert-success {
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #6EE7B7;
+}
+
 .success-card-v2 {
   max-width: 720px;
   margin: 4rem auto 6rem auto;
@@ -699,7 +708,7 @@ footer {
             {% if messages %}
                 <div style="margin-top: 1.5rem;">
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}" style="padding: 1rem 1.4rem; border-radius: 14px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(8, 17, 31, 0.75); border: 1px solid {{ 'rgba(244, 63, 94, 0.4)' if category == 'danger' else 'rgba(16, 185, 129, 0.4)' }}; color: {{ '#FDA4AF' if category == 'danger' else '#6EE7B7' }}; backdrop-filter: blur(16px);">
+                        <div class="alert alert-{{ category }}">
                             <i data-lucide="{{ 'alert-circle' if category == 'danger' else 'check-circle-2' }}" style="width: 20px; height: 20px;"></i>
                             <span>{{ message }}</span>
                         </div>
