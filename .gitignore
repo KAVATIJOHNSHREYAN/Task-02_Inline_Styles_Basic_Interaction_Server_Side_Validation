@@ -7,3 +7,5 @@ venv/
 .DS_Store
 static/uploads/*
 !static/uploads/.gitkeep
+
+.vercel
