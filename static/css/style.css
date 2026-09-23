@@ -608,11 +608,15 @@ textarea.form-input {
 .avatar-preview-lg {
   width: 96px;
   height: 96px;
+  min-width: 96px;
+  min-height: 96px;
+  display: block;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--color-cyan);
   box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
   margin: 0 auto 1.5rem auto;
+  background: var(--color-navy-deep);
 }
 
 .details-grid-v2 {

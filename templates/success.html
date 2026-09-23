@@ -6,7 +6,7 @@
 
 <div class="success-card-v2">
     {% if submission and submission.avatar_path %}
-        <img src="{{ submission.avatar_path }}" alt="User Profile Avatar" class="avatar-preview-lg">
+        <img src="{{ submission.avatar_path }}" alt="User Profile Avatar" class="avatar-preview-lg" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{ submission.name|urlencode }}&background=1E3A8A&color=38BDF8&size=128';">
     {% else %}
         <div class="brand-badge-v2" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1.5rem auto;">
             ✓
