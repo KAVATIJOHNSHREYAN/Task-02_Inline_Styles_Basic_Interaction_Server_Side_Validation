@@ -101,8 +101,8 @@ def validate_form_and_file(form, file):
         return False, "Please enter a valid email address."
 
     # 5. Phone Number Regex (7-15 digits)
-    clean_phone = re.sub(r'[\s\-()]', '', phone)
-    if not re.match(r'^\+?[0-9]{7,15}$', clean_phone):
+    clean_phone = re.sub(r'[\s\-()]/g', '', phone)
+    if not re.match(r'^\+?[0-9]{7,15}$', re.sub(r'[\s\-()]', '', phone)):
         return False, "Please enter a valid phone number (7 to 15 digits)."
 
     # 6. Password Complexity (min 8 chars, at least 1 digit or upper)

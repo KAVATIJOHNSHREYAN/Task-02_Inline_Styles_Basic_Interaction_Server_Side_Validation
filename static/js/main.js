@@ -182,11 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const isTermsChecked = termsCheckbox.checked;
         const isNameValid = nameInput && nameInput.value.trim().length >= 2;
         const isEmailValid = emailInput && /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(emailInput.value.trim());
+        const rawPhone = phoneInput ? phoneInput.value.replace(/[^0-9]/g, '') : '';
+        const isPhoneValid = rawPhone.length >= 7 && rawPhone.length <= 15;
         const isPassValid = passwordInput && passwordInput.value.length >= 8;
         const isMatchValid = confirmPasswordInput && confirmPasswordInput.value === passwordInput.value;
         const isMsgValid = messageInput && messageInput.value.trim().length >= 10;
 
-        if (isTermsChecked && isNameValid && isEmailValid && isPassValid && isMatchValid && isMsgValid) {
+        if (isTermsChecked && isNameValid && isEmailValid && isPhoneValid && isPassValid && isMatchValid && isMsgValid) {
             submitBtn.removeAttribute('disabled');
         } else {
             submitBtn.setAttribute('disabled', 'true');
