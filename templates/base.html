@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Contact Portal v2 — 2026 VisionOS & Raycast Inspired Server-Rendered Platform with Live Validation.">
+    <title>{% block title %}Smart Contact Portal v2{% endblock %}</title>
+
+    <!-- Google Fonts: Poppins (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Vector Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Task 2 VisionOS Glass Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- VisionOS Abstract Light Ribbon Canvas -->
+    <div class="space-canvas"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Redesigned VisionOS Floating Navigation Bar -->
+    <div class="navbar-floating">
+        <nav class="nav-glass-panel">
+            <a href="{{ url_for('home') }}" class="brand-logo">
+                <div class="brand-badge-v2">v2</div>
+                <span>SmartPortal</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('home') }}#contact" class="btn-pill-glow">Get Started</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Global Flash Error/Success Banners -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div style="margin-top: 1.5rem;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" style="padding: 1rem 1.4rem; border-radius: 14px; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; background: rgba(8, 17, 31, 0.75); border: 1px solid {{ 'rgba(244, 63, 94, 0.4)' if category == 'danger' else 'rgba(16, 185, 129, 0.4)' }}; color: {{ '#FDA4AF' if category == 'danger' else '#6EE7B7' }}; backdrop-filter: blur(16px);">
+                            <i data-lucide="{{ 'alert-circle' if category == 'danger' else 'check-circle-2' }}" style="width: 20px; height: 20px;"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Redesigned Glass Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="display: flex; align-items: center; gap: 0.6rem; color: #F8FAFC; font-weight: 700;">
+                    <i data-lucide="shield" style="width: 20px; height: 20px; color: var(--color-cyan);"></i>
+                    <span>Smart Contact Portal v2</span>
+                </div>
+                <div>Cognifyz Internship — Task 2</div>
+            </div>
+            <div class="footer-bottom">
+                &copy; {{ current_year if current_year else 2026 }} Smart Contact Portal v2 by Kavati John Shreyan.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Inline JavaScript Engine -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

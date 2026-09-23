@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Inquiry Confirmed — Smart Contact Portal v2{% endblock %}
+
+{% block content %}
+
+<div class="success-card-v2">
+    {% if submission and submission.avatar_path %}
+        <img src="{{ submission.avatar_path }}" alt="User Profile Avatar" class="avatar-preview-lg">
+    {% else %}
+        <div class="brand-badge-v2" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1.5rem auto;">
+            ✓
+        </div>
+    {% endif %}
+
+    <h1 style="font-family: 'Poppins', sans-serif; font-size: 2.2rem; font-weight: 800; color: #F8FAFC;">Inquiry Submitted Successfully!</h1>
+    <p style="color: var(--text-muted); margin-top: 0.4rem;">Your registration details were validated by Flask server-side logic and persisted to JSON storage.</p>
+
+    {% if submission %}
+    <div class="details-grid-v2">
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Submission ID</div>
+            <div style="font-family: monospace; color: var(--color-cyan); margin-top: 0.2rem;">{{ submission.id }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Submitted At</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.timestamp }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Full Name</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.name }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Email Address</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.email }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Phone Number</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.phone }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Date of Birth</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.dob }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Country</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.country }}</div>
+        </div>
+
+        <div>
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Gender</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.gender }}</div>
+        </div>
+
+        <div class="full">
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Subject</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem;">{{ submission.subject }}</div>
+        </div>
+
+        <div class="full">
+            <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700;">Message Content</div>
+            <div style="color: var(--text-main); margin-top: 0.2rem; line-height: 1.6;">{{ submission.message }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('home') }}" class="btn-pill-glow" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+        <span>Return to Home</span>
+    </a>
+</div>
+
+{% endblock %}

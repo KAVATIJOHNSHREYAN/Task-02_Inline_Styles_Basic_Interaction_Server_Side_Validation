@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Contact Portal v2 — Live Interactive Registration & Contact{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-v2">
+    <div class="badge-raycast">
+        <span class="pulse-dot"></span>
+        Task 2 — Inline Validation & Extended Form Engine
+    </div>
+    <h1>
+        Next-Generation Inquiries <br><span>Intelligent & Secure</span>
+    </h1>
+    <p>
+        Experience real-time inline validation, password security meters, character counters, file upload previews, and server-side verification.
+    </p>
+</section>
+
+<!-- VisionOS Glass Form Card -->
+<section id="contact">
+    <div class="glass-form-card-v2">
+        <div class="form-title-group">
+            <h2>Complete Inquiry Form</h2>
+            <p>Fill out the required information below to submit your validated inquiry to the server.</p>
+        </div>
+
+        <form id="contactFormV2" action="{{ url_for('contact') }}" method="POST" enctype="multipart/form-data" class="form-grid-v2">
+            
+            <!-- SECTION 1: PERSONAL INFORMATION -->
+            <div class="form-section-label">
+                <i data-lucide="user-check" style="width: 18px; height: 18px;"></i>
+                Personal Profile Details
+            </div>
+
+            <!-- Full Name -->
+            <div class="form-group-v2">
+                <label for="name">Full Name <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="form-input" 
+                        placeholder="John Doe" 
+                        value="{{ form_data.name if form_data else '' }}" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group-v2">
+                <label for="email">Email Address <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-control form-input" 
+                        placeholder="john@example.com" 
+                        value="{{ form_data.email if form_data else '' }}" 
+                        required
+                    >
+                </div>
+                <div id="emailFeedback" class="field-feedback"></div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group-v2">
+                <label for="phone">Phone Number <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="phone" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        class="form-input" 
+                        placeholder="+1 987 654 3210" 
+                        value="{{ form_data.phone if form_data else '' }}" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group-v2">
+                <label for="dob">Date of Birth <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="calendar" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="date" 
+                        id="dob" 
+                        name="dob" 
+                        class="form-input" 
+                        value="{{ form_data.dob if form_data else '' }}" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Country Selection -->
+            <div class="form-group-v2">
+                <label for="country">Country <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="globe" style="width: 18px; height: 18px;"></i>
+                    <select id="country" name="country" class="form-input" required>
+                        <option value="" disabled selected>Select your country</option>
+                        <option value="United States" {% if form_data and form_data.country == 'United States' %}selected{% endif %}>United States</option>
+                        <option value="India" {% if form_data and form_data.country == 'India' %}selected{% endif %}>India</option>
+                        <option value="United Kingdom" {% if form_data and form_data.country == 'United Kingdom' %}selected{% endif %}>United Kingdom</option>
+                        <option value="Canada" {% if form_data and form_data.country == 'Canada' %}selected{% endif %}>Canada</option>
+                        <option value="Australia" {% if form_data and form_data.country == 'Australia' %}selected{% endif %}>Australia</option>
+                        <option value="Germany" {% if form_data and form_data.country == 'Germany' %}selected{% endif %}>Germany</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Gender Radio Selection -->
+            <div class="form-group-v2">
+                <label>Gender <span class="req">*</span></label>
+                <div class="radio-group">
+                    <label class="radio-card {% if form_data and form_data.gender == 'Male' %}active{% endif %}">
+                        <input type="radio" name="gender" value="Male" required {% if form_data and form_data.gender == 'Male' %}checked{% endif %}>
+                        <i data-lucide="user" style="width: 16px; height: 16px;"></i> Male
+                    </label>
+                    <label class="radio-card {% if form_data and form_data.gender == 'Female' %}active{% endif %}">
+                        <input type="radio" name="gender" value="Female" required {% if form_data and form_data.gender == 'Female' %}checked{% endif %}>
+                        <i data-lucide="user" style="width: 16px; height: 16px;"></i> Female
+                    </label>
+                    <label class="radio-card {% if form_data and form_data.gender == 'Other' %}active{% endif %}">
+                        <input type="radio" name="gender" value="Other" required {% if form_data and form_data.gender == 'Other' %}checked{% endif %}>
+                        <i data-lucide="smile" style="width: 16px; height: 16px;"></i> Other
+                    </label>
+                </div>
+            </div>
+
+            <!-- SECTION 2: SECURITY CREDENTIALS -->
+            <div class="form-section-label">
+                <i data-lucide="lock" style="width: 18px; height: 18px;"></i>
+                Security & Authentication Credentials
+            </div>
+
+            <!-- Password -->
+            <div class="form-group-v2">
+                <label for="password">Password <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="key" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="••••••••" 
+                        required
+                    >
+                </div>
+                <div class="password-meter"><div id="passwordStrengthMeter" class="password-meter-bar"></div></div>
+                <div id="passwordFeedback" class="field-feedback"></div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group-v2">
+                <label for="confirmPassword">Confirm Password <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="shield-check" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirm_password" 
+                        class="form-input" 
+                        placeholder="••••••••" 
+                        required
+                    >
+                </div>
+                <div id="confirmPasswordFeedback" class="field-feedback"></div>
+            </div>
+
+            <!-- SECTION 3: INQUIRY MESSAGE & AVATAR UPLOAD -->
+            <div class="form-section-label">
+                <i data-lucide="message-square" style="width: 18px; height: 18px;"></i>
+                Inquiry Details & Profile Avatar
+            </div>
+
+            <!-- Subject -->
+            <div class="form-group-v2 full-width">
+                <label for="subject">Subject <span class="req">*</span></label>
+                <div class="input-box">
+                    <i data-lucide="bookmark" style="width: 18px; height: 18px;"></i>
+                    <input 
+                        type="text" 
+                        id="subject" 
+                        name="subject" 
+                        class="form-input" 
+                        placeholder="Project Inquiry" 
+                        value="{{ form_data.subject if form_data else '' }}" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Message with Character Counter -->
+            <div class="form-group-v2 full-width">
+                <label for="message">Your Message <span class="req">*</span></label>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    class="form-input" 
+                    placeholder="Describe how we can collaborate (minimum 10 characters)..." 
+                    required
+                >{{ form_data.message if form_data else '' }}</textarea>
+                <div style="display: flex; justify-content: flex-end;">
+                    <div id="charCounter" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.35rem;">0 / 500 characters</div>
+                </div>
+            </div>
+
+            <!-- Profile Image File Upload Card -->
+            <div class="form-group-v2 full-width">
+                <label>Profile Avatar Image (PNG, JPG, Max 5MB)</label>
+                <label for="avatar" class="file-upload-card">
+                    <img id="filePreview" class="file-preview-thumb" alt="Avatar Preview">
+                    <i data-lucide="upload-cloud" style="width: 32px; height: 32px; color: var(--color-cyan); margin-bottom: 0.5rem;"></i>
+                    <div id="uploadPrompt" style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">
+                        Click to select or drag and drop your avatar image
+                    </div>
+                    <input type="file" id="avatar" name="avatar" accept="image/*" style="display: none;">
+                </label>
+            </div>
+
+            <!-- Terms & Conditions Checkbox -->
+            <div class="form-group-v2 full-width">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <span>I accept the <strong style="color: var(--color-cyan);">Terms of Service</strong> and Privacy Policy.</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group-v2 full-width">
+                <button type="submit" id="submitBtn" class="btn-submit-v2" disabled>
+                    <span>Submit Inquiry</span>
+                    <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+{% endblock %}
