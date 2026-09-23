@@ -242,7 +242,7 @@ def contact():
         session['latest_submission'] = submission_entry
         flash('Your inquiry has been submitted and validated successfully!', 'success')
 
-        # Clean redirect to success endpoint without large Base64 header strings
+        # Clean redirect to success endpoint without large header strings
         return redirect(url_for('success', 
                                 sub_id=sub_id, 
                                 name=form_data['name'], 
@@ -252,7 +252,7 @@ def contact():
                                 country=form_data['country'], 
                                 gender=form_data['gender'], 
                                 subject=form_data['subject'], 
-                                message=form_data['message'], 
+                                message=form_data['message'][:100], 
                                 timestamp=timestamp))
 
     except Exception as e:
