@@ -6,23 +6,24 @@ import uuid
 import logging
 from datetime import datetime
 
-# Initialize Flask application
-app = Flask(__name__, static_folder='static', template_folder='templates')
+# Absolute Paths configuration for Vercel & Local execution
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+template_dir = os.path.join(BASE_DIR, 'templates')
+static_dir = os.path.join(BASE_DIR, 'static')
+
+app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 app.secret_key = os.environ.get('SECRET_KEY', 'smart_contact_portal_v2_secret_key_cognifyz_2026')
 
-# Max Payload Size: 10MB
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10MB limit
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
-# Storage paths with /tmp fallback for Vercel Serverless
 IS_VERCEL = bool(os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'))
 
 if IS_VERCEL:
     DATA_DIR = '/tmp/data'
     UPLOAD_FOLDER = '/tmp/uploads'
 else:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, 'data')
     UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads')
 
@@ -74,7 +75,7 @@ def contact():
     if request.method == 'GET':
         return redirect(url_for('home'))
 
-    # Extract Form Data safely
+    # Extract Form Data
     name = request.form.get('name', '').strip()
     email = request.form.get('email', '').strip()
     phone = request.form.get('phone', '').strip()
@@ -130,10 +131,10 @@ def contact():
         'avatar_path': avatar_b64
     }
 
-    # Attempt file persistence safely
+    # Save to JSON storage safely
     safe_save_submission(submission)
 
-    # Directly render success confirmation template (Guarantees zero 500 redirect errors on Vercel)
+    # Render success page directly
     return render_template('success.html', submission=submission)
 
 
@@ -145,7 +146,7 @@ def success():
     return render_template('success.html', submission=submission)
 
 
-# Global Error Handlers to guarantee zero 500 screens
+# Global Error Handlers to prevent 500 crashes
 @app.errorhandler(404)
 def handle_404(e):
     return redirect(url_for('home'))
@@ -178,9 +179,6 @@ def handle_500(e):
 def handle_all_exceptions(e):
     return handle_500(e)
 
-
-# Vercel Serverless Application Instance
-app_instance = app
 
 if __name__ == '__main__':
     safe_ensure_directories()
